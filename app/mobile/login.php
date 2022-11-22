@@ -5,7 +5,7 @@ header("Access-Control-Allow-Methods: POST");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-require_once 'core/config.php';
+require_once '../../core/config.php';
 
 $data = json_decode(file_get_contents("php://input"));
 
@@ -16,7 +16,7 @@ if(isset($data->username) && !empty($data->username) ){
 
 	$date = getCurrentDate();
 
-	$fetch_rows = $mysqli_connect->query("SELECT user_id, user_category from tbl_users where username='$username' and password=md5('$password') ") or die(mysqli_error());
+	$fetch_rows = $mysqli_connect->query("SELECT * from tbl_users where username='$username' and password=md5('$password') ") or die(mysqli_error());
 	$row = $fetch_rows->fetch_array();
 
 	$response = array();
@@ -24,11 +24,17 @@ if(isset($data->username) && !empty($data->username) ){
 	if($row[0] > 0){
 
 		$response['user_id'] = $row['user_id'];
+		$response['user_fname'] = $row['user_fname'];
+		$response['user_mname'] = $row['user_mname'];
+		$response['user_lname'] = $row['user_lname'];
 		$response['user_category'] = $row['user_category'];
 		$response['response'] = 1;
 
 	}else{
 		$response['user_id'] = 0;
+		$response['user_fname'] = "";
+		$response['user_mname'] = "";
+		$response['user_lname'] = "";
 		$response['user_category'] = 0;
 		$response['response'] = -1;
 	}
