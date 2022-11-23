@@ -3,7 +3,8 @@
         <div class="modal-dialog" style="margin-top: 50px;" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="modalLabel"><span class='fa fa-pen'></span> Add Entry</h4>
+                    <h5 class="modal-title" id="modalCenterTitle">Add Entry</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="hidden_id" name="input[user_id]">
@@ -22,39 +23,39 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label><strong>Category</strong></label>
-                                <div>
-                                <select class="form-control input-item select2" name="input[user_category]" id="user_category" required>
-                                    <option value="">&mdash; Please Select &mdash;</option>
-                                    <option value="A">Admin</option>
-                                    <option value="T">Teacher</option>
-                                </select>
-                                </div>
-                            </div>
+                        <div class="col mb-3">
+                            <label for="nameBasic" class="form-label">Address</label>
+                            <textarea class="form-control input-item" name="input[user_address]" autocomplete="off" id="user_address" placeholder="Address" required></textarea>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label><strong>Username</strong></label>
-                                <div>
-                                <input type="text" class="form-control input-item" name="input[username]" autocomplete="off" id="username" placeholder="Username" maxlength=15 required>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="nameBasic" class="form-label">Contact #</label>
+                            <input type="text" id="user_contact_number" class="form-control input-item" name="input[user_contact_number]" placeholder="Enter contact number" autocomplete="off" required>
                         </div>
-                        <div class="col-lg-12">
-                            <div id="div_password" class="form-group">
-                                <label><strong>Password</strong></label>
-                                <div>
-                                <input type="password" class="form-control input-item" name="input[password]" autocomplete="off" id="password" placeholder="Password" required>
-                                </div>
-                            </div>
+                        <div class="col mb-3">
+                            <label for="nameBasic" class="form-label">Category</label>
+                            <select class="form-control input-item select2" name="input[user_category]" id="user_category" required>
+                                <option value="">&mdash; Please Select &mdash;</option>
+                                <option value="A">Admin</option>
+                                <option value="Biker">Biker</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="nameBasic" class="form-label">Username</label>
+                            <input type="text" class="form-control input-item" name="input[username]" autocomplete="off" id="username" placeholder="Username" maxlength=15 required>
+                        </div>
+                        <div class="col mb-3" id="div_password">
+                            <label for="nameBasic" class="form-label">Password</label>
+                            <input type="password" class="form-control input-item" name="input[password]" autocomplete="off" id="password" placeholder="Password" required>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal"><i class="fas fa-times"></i></button>
-                    <button type="submit" class="btn btn-primary font-weight-bold"><i class="flaticon2-check-mark"></i></button>
+                    <button type="submit" class="btn btn-primary font-weight-bold"><i class='bx bx-check'></i></button>
                 </div>
             </div>
         </div>

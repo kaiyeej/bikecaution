@@ -1,8 +1,11 @@
 
 <?php
 include 'core/config.php';
-
-
+if (!isset($_SESSION['user']['id'])) {
+  
+ header("location:./login/index.php");
+}
+echo $_SESSION['user']['id'];
 ?>
 <!DOCTYPE html>
 <html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="assets/" data-template="vertical-menu-template-free">
@@ -11,7 +14,7 @@ include 'core/config.php';
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>Bike</title>
+  <title>Bike Caution</title>
 
   <meta name="description" content="" />
 
@@ -32,6 +35,7 @@ include 'core/config.php';
   <link rel="stylesheet" href="assets/css/demo.css" />
 
   <link href="assets/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="assets/vendor/sweetalert/sweetalert.css">
   <!-- Vendors CSS -->
   <link rel="stylesheet" href="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
   <link rel="stylesheet" href="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
@@ -42,6 +46,7 @@ include 'core/config.php';
   <script type="text/javascript" charset="utf8" src="assets/datatables/jquery.dataTables.js"></script>
   <!-- Page CSS -->
 
+  <script src="assets/vendor/sweetalert/sweetalert.js"></script>
   <!-- Helpers -->
   <script src="assets/vendor/js/helpers.js"></script>
 
@@ -57,7 +62,7 @@ include 'core/config.php';
 
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
         <div class="app-brand demo">
-          <a href="index.html" class="app-brand-link">
+          <a href="index.php" class="app-brand-link">
             <span class="app-brand-logo demo">
               <svg width="25" viewBox="0 0 25 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <defs>
@@ -125,7 +130,7 @@ include 'core/config.php';
               <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                   <div class="avatar avatar-online">
-                    <img src="assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                      <i style="font-size: 3rem;" class='bx bxs-user-circle'></i>
                   </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -133,13 +138,13 @@ include 'core/config.php';
                     <a class="dropdown-item" href="#">
                       <div class="d-flex">
                         <div class="flex-shrink-0 me-3">
-                          <div class="avatar avatar-online">
-                            <img src="assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                          <div class="avatar">
+                            <i style="font-size: 3rem;" class='bx bxs-user-circle'></i>
                           </div>
                         </div>
                         <div class="flex-grow-1">
-                          <span class="fw-semibold d-block">John Doe</span>
-                          <small class="text-muted">Admin</small>
+                          <span class="fw-semibold d-block" id="fullname_label"></span>
+                          <small class="text-muted" id="category_label"></small>
                         </div>
                       </div>
                     </a>
@@ -148,31 +153,16 @@ include 'core/config.php';
                     <div class="dropdown-divider"></div>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="profile">
                       <i class="bx bx-user me-2"></i>
                       <span class="align-middle">My Profile</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#">
-                      <i class="bx bx-cog me-2"></i>
-                      <span class="align-middle">Settings</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#">
-                      <span class="d-flex align-items-center align-middle">
-                        <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
-                        <span class="flex-grow-1 align-middle">Billing</span>
-                        <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                      </span>
                     </a>
                   </li>
                   <li>
                     <div class="dropdown-divider"></div>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="auth-login-basic.html">
+                    <a  onclick="logout()" class="dropdown-item" href="#">
                       <i class="bx bx-power-off me-2"></i>
                       <span class="align-middle">Log Out</span>
                     </a>
@@ -222,28 +212,44 @@ include 'core/config.php';
   <script type='text/javascript'>
     <?php
     echo "var route_settings = " . $route_settings . ";\n";
+    echo "var user_profile = " . $user_profile . ";\n";
     ?>
   </script><script type="text/javascript">
     var modal_detail_status = 0;
     $(document).ready(function() {
-      $(".input-item").css({"color": "#fff;"});
+      $("#fullname_label").html(user_profile[1]);
+      $("#category_label").html(user_profile[2]);
     });
 
     function logout() {
-      var confirm_export = confirm("You are about to logout.");
-      if (confirm_export == true) {
-        var url = "controllers/sql.php?c=LoginUser&q=logout";
-        $.ajax({
-          url: url,
-          success: function(data) {
+      swal({
+          title: "Are you sure?",
+          text: "Your session will expire!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonClass: "btn-danger",
+          confirmButtonText: "Yes, sign me out!",
+          cancelButtonText: "No, stay me in!",
+          closeOnConfirm: false,
+          closeOnCancel: false
+        },
+        function(isConfirm) {
+          if (isConfirm) {
 
-            location.reload();
+            $.ajax({
+              type: "POST",
+              url: "controllers/sql.php?c=Users&q=logout",
+              success: function(data) {
+                window.location = "./";
+              }
+            });
 
+
+          } else {
+            swal("Cancelled", "Entries are safe :)", "error");
           }
         });
       }
-      
-    }
 
     function schema() {
       $.ajax({
@@ -380,8 +386,6 @@ include 'core/config.php';
             const id_name = this.id;
             this.value = json[id_name];
           });
-
-          $(".select2").select2().trigger('change');
 
           $("#modalLabel").html("<i class='flaticon-edit'></i> Update Entry");
           $("#modalEntry").modal('show');
@@ -715,8 +719,6 @@ include 'core/config.php';
   <!-- Page JS -->
   <script src="assets/js/dashboards-analytics.js"></script>
 
-  <!-- Place this tag in your head or just before your close body tag. -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
 
 
 </body>

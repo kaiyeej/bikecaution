@@ -1,10 +1,12 @@
 <div class="container-xxl flex-grow-1 container-p-y">
-    <a href="#" onclick="addUser()" data-container="body" data-offset="20px 20px" data-toggle="popover" data-placement="top" data-content="Add New Entry" class="btn btn-success">
-        <i class="flaticon2-add"></i>
-    </a>
-    <a href="#"  data-container="body" data-offset="20px 20px" data-toggle="popover" data-placement="top" data-content="Delete Selected Entry" onclick='deleteEntry()' class="btn btn-danger">
-        <i class="flaticon-delete-1"></i>
-    </a>
+    <div class="btn-group" style="padding-bottom: 10px;"> 
+        <a href="#" onclick="addUser()" data-container="body" data-offset="20px 20px" data-toggle="popover" data-placement="top" data-content="Add New Entry" class="btn btn-outline-primary">
+            <i class='bx bx-plus-circle'></i>
+        </a>
+        <a href="#"  data-container="body" data-offset="20px 20px" data-toggle="popover" data-placement="top" data-content="Delete Selected Entry" onclick='deleteEntry()' class="btn btn-outline-danger">
+            <i class='bx bx-trash'></i>
+        </a>
+    </div>
     <!-- Basic Bootstrap Table -->
     <div class="card">
         <h5 class="card-header">Manage Users</h5>
@@ -32,15 +34,19 @@
 </div>
 <?php include "modal_user.php"; ?>
 <script type="text/javascript">
+    
     function addUser(){
         addModal();
+        $('#password').prop('required',true);
         $("#div_password").show();
     }
 
     function getUserDetails(id){
         $("#div_password").hide();
+        $('#password').prop('required',false);
         getEntryDetails(id);
     }
+
 
     function getEntries() {
         $("#dt_entries").DataTable().destroy();
@@ -62,8 +68,7 @@
                                        '<i class="bx bx-dots-vertical-rounded"></i>'+
                                     '</button>'+
                                     '<div class="dropdown-menu">'+
-                                        '<a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-2"></i> Edit</a>'+
-                                        '<a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-2"></i> Delete</a>'+
+                                        '<a class="dropdown-item" onclick="getUserDetails(' + row.user_id + ')"><i class="bx bx-edit-alt me-2"></i> Edit</a>'+
                                     '</div>'+
                                 '</div>';
                     }
@@ -81,7 +86,7 @@
                     "data": "username"
                 },
                 {
-                    "data": "date_last_modified"
+                    "data": "date_modified"
                 }
             ]
         });

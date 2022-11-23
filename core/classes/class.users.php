@@ -19,12 +19,12 @@ class Users extends Connection
                 'user_mname' => $this->inputs['user_mname'],
                 'user_lname' => $this->inputs['user_lname'],
                 'user_address' => $this->inputs['user_address'],
-                'user_address' => $this->inputs['user_address'],
                 'user_category' => $this->inputs['user_category'],
+                'user_contact_number' => $this->inputs['user_contact_number'],
                 'date_added' => $this->getCurrentDate(),
                 'date_modified' => $this->getCurrentDate(),
                 'username' => $this->inputs['username'],
-                'password' => md5('$pass')
+                'password' => md5($pass)
             );
             return $this->insert($this->table, $form);
         }
@@ -39,14 +39,41 @@ class Users extends Connection
             return 2;
         } else {
             $form = array(
-                'user_fullname' => $this->inputs['user_fullname'],
+                'user_fname' => $this->inputs['user_fname'],
+                'user_mname' => $this->inputs['user_mname'],
+                'user_lname' => $this->inputs['user_lname'],
+                'user_address' => $this->inputs['user_address'],
                 'user_category' => $this->inputs['user_category'],
-                'username' => $username
+                'user_contact_number' => $this->inputs['user_contact_number'],
+                'date_modified' => $this->getCurrentDate(),
+                'username' => $this->inputs['username'],
             );
             return $this->update($this->table, $form, "$this->pk = '$primary_id'");
         }
     }
 
+    public function login()
+    {
+        $response = [];
+        $username = $this->clean($this->inputs['username']);
+        $password = md5($this->clean($this->inputs['password']));
+        $result = $this->select($this->table, '*', "username = '$username' AND password = '$password' AND user_category != 'B'");
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            $response['login'] = 'Yes';
+            $_SESSION['user']['id'] = $row['user_id'];
+            $_SESSION['user']['category'] = $row['user_category'];
+        } else {
+            $response['login'] = 'No';
+        }
+        return $response;
+    }
+
+    public function logout()
+    {
+        session_destroy();
+    }
 
     public function remove()
     {

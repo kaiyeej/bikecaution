@@ -13,12 +13,20 @@ $routes = array(
         'class_name' => 'Users',
         'has_detail' => 0
     ),
+    "profile" => array(
+        'class_name' => 'Profile',
+        'has_detail' => 0
+    ),
 );
 /** END SET ROUTES */
 
 
 $base_folder = "pages/";
-$page = str_replace("/bike/", "", $request);
+$page = str_replace("/bikecaution/", "", $request);
+
+
+$Profile = new Profile();
+$user_profile = json_encode($Profile->view_data());
 
 // chec if has parameters
 if (substr_count($page, "?") > 0) {
