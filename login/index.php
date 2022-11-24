@@ -96,34 +96,93 @@ if (isset($_SESSION['user']['id'])) {
               </a>
             </div>
             <!-- /Logo -->
-            <h4 class="mb-2">Welcome to Bike Caution! 👋</h4>
-            <p class="mb-4">Please sign-in to your account and start the adventure</p>
-
-            <form class="mb-3" method="POST" id="frm_submit">
-              <div class="mb-3">
-                <label for="email" class="form-label"> Username</label>
-                <input type="text" class="form-control input-item" placeholder="Enter your username" autofocus required name="input[username]" autocomplete="off" />
-              </div>
-              <div class="mb-3 form-password-toggle">
-                <div class="d-flex justify-content-between">
-                  <label class="form-label" for="password">Password</label>
+            <div id="div_login">
+              <h4 class="mb-2">Welcome to Bike Caution! 👋</h4>
+              <p class="mb-4">Please sign-in to your account and start the adventure</p>
+              <form class="mb-3" method="POST" id="frm_submit">
+                <div class="mb-3">
+                  <label for="email" class="form-label"> Username</label>
+                  <input type="text" class="form-control input-item" placeholder="Enter your username" autofocus required name="input[username]" autocomplete="off" />
                 </div>
-                <div class="input-group input-group-merge">
-                  <input type="password" class="form-control input-item" required name="input[password]" autocomplete="off" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
-                  <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                <div class="mb-3 form-password-toggle">
+                  <div class="d-flex justify-content-between">
+                    <label class="form-label" for="password">Password</label>
+                  </div>
+                  <div class="input-group input-group-merge">
+                    <input type="password" class="form-control input-item" required name="input[password]" autocomplete="off" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                  </div>
                 </div>
-              </div>
-              <div class="mb-3">
-                <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
-              </div>
-            </form>
-
-            <p class="text-center">
-              <span>New on our platform?</span>
-              <a href="auth-register-basic.html">
-                <span>Create an account</span>
-              </a>
-            </p>
+                <div class="mb-3">
+                  <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+                </div>
+              </form>
+              <p class="text-center">
+                <span>New on our platform?</span>
+                <a href="#" onclick="changeType('register')">
+                  <span>Create an account</span>
+                </a>
+              </p>
+            </div>
+            <div id="div_register" style="display: none;">
+              <h4 class="mb-2">Adventure starts here 🚀</h4>
+              <p class="mb-4">Register now!</p>
+              <form id="frm_register" class="mb-3" method="POST" >
+                <div class="row">
+                  <div class="col mb-3">
+                      <label for="nameBasic" class="form-label">First name</label>
+                      <input type="text" id="user_fname" class="form-control input-item" name="input[user_fname]" placeholder="Enter first name" autocomplete="off" required>
+                  </div>
+                  <div class="col mb-3">
+                      <label for="nameBasic" class="form-label">Middle name</label>
+                      <input type="text" id="user_mname" class="form-control input-item" name="input[user_mname]" placeholder="Enter middle name" autocomplete="off" required>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col mb-3">
+                      <label for="nameBasic" class="form-label">Last name</label>
+                      <input type="text" id="user_lname" class="form-control input-item" name="input[user_lname]" placeholder="Enter last name" autocomplete="off" required>
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col mb-3">
+                        <label for="nameBasic" class="form-label">Address</label>
+                        <textarea class="form-control input-item" name="input[user_address]" autocomplete="off" id="user_address" placeholder="Address" required></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mb-3">
+                        <label for="nameBasic" class="form-label">Contact #</label>
+                        <input type="text" id="user_contact_number" class="form-control input-item" name="input[user_contact_number]" placeholder="Enter contact number" autocomplete="off" required>
+                    </div>
+                    <div class="col mb-3">
+                        <label for="nameBasic" class="form-label">Category</label>
+                        <select class="form-control input-item select2" name="input[user_category]" id="user_category" required>
+                            <option value="">&mdash; Please Select &mdash;</option>
+                            <option value="A">Admin</option>
+                            <option value="Biker">Biker</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mb-3">
+                        <label for="nameBasic" class="form-label">Username</label>
+                        <input type="text" class="form-control input-item" name="input[username]" autocomplete="off" id="username" placeholder="Username" maxlength=15 required>
+                    </div>
+                    <div class="col mb-3" id="div_password">
+                        <label for="nameBasic" class="form-label">Password</label>
+                        <input type="password" class="form-control input-item" name="input[password]" autocomplete="off" id="password" placeholder="Password" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary d-grid w-100">Sign up</button>
+              </form>
+                <p class="text-center">
+                  <span>Already have an account? </span>
+                  <a href="#" onclick="changeType('login')">
+                    <span>Sign in instead</span>
+                  </a>
+                </p>
+            </div>
           </div>
         </div>
         <!-- /Register -->
@@ -149,6 +208,36 @@ if (isset($_SESSION['user']['id'])) {
 
 </body>
 <script type="text/javascript">
+  function changeType(type){
+    if(type == "login"){
+      $("#div_register").hide();
+      $("#div_login").show();
+    }else if(type == "register"){
+      $("#div_login").hide();
+      $("#div_register").show();
+    }
+  }
+
+  $("#frm_register").submit(function(e) {
+      e.preventDefault();
+
+      $.ajax({
+        type: "POST",
+        url: "../controllers/sql.php?c=Users&q=add",
+        data: $("#frm_register").serialize(),
+        success: function(data) {
+          var json = JSON.parse(data);
+          if (json.data == 1) {
+            swal("Success!", "You are already registered! Login now", "success");
+          } else if (json.data == 2) {
+            swal("Cannot proceed!", "User already exists!", "warning");
+          } else {
+            swal("Failed to execute query!", json, "warning");
+          }
+        }
+      });
+  });
+
   $("#frm_submit").submit(function(e) {
       e.preventDefault();
 
