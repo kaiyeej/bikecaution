@@ -97,7 +97,7 @@ echo $_SESSION['user']['id'];
                 </g>
               </svg>
             </span>
-            <span class="app-brand-text demo menu-text fw-bolder ms-2">Bike</span>
+            <span class="app-brand-text demo menu-text fw-bolder ms-2">Bike Caution</span>
           </a>
 
           <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -143,8 +143,8 @@ echo $_SESSION['user']['id'];
                           </div>
                         </div>
                         <div class="flex-grow-1">
-                          <span class="fw-semibold d-block" id="fullname_label"></span>
-                          <small class="text-muted" id="category_label"></small>
+                          <span class="fw-semibold d-block fullname_label"></span>
+                          <small class="text-muted category_label"></small>
                         </div>
                       </div>
                     </a>
@@ -217,8 +217,8 @@ echo $_SESSION['user']['id'];
   </script><script type="text/javascript">
     var modal_detail_status = 0;
     $(document).ready(function() {
-      $("#fullname_label").html(user_profile[1]);
-      $("#category_label").html(user_profile[2]);
+      $(".fullname_label").html(user_profile[1]);
+      $(".category_label").html(user_profile[2]);
     });
 
     function logout() {

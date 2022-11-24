@@ -155,15 +155,8 @@ if (isset($_SESSION['user']['id'])) {
                         <label for="nameBasic" class="form-label">Contact #</label>
                         <input type="text" id="user_contact_number" class="form-control input-item" name="input[user_contact_number]" placeholder="Enter contact number" autocomplete="off" required>
                     </div>
-                    <div class="col mb-3">
-                        <label for="nameBasic" class="form-label">Category</label>
-                        <select class="form-control input-item select2" name="input[user_category]" id="user_category" required>
-                            <option value="">&mdash; Please Select &mdash;</option>
-                            <option value="A">Admin</option>
-                            <option value="Biker">Biker</option>
-                        </select>
-                    </div>
                 </div>
+                <input type="hidden" id="user_category" class="form-control input-item" name="input[user_category]" value="B">
                 <div class="row">
                     <div class="col mb-3">
                         <label for="nameBasic" class="form-label">Username</label>
